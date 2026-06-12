@@ -10,7 +10,7 @@
 :root{
   --bg:#09090f;--bg2:#0b0b12;--bg3:#101018;
   --card:#161620;--card2:#1a1a26;--card3:#11111a;
-  --red:#ff1f2d;--red2:#d90429;--red3:#8f0d18;
+  --red:#ff1f2d;--red2:#d90429;
   --text:#f8fafc;--muted:#9ca3af;--dim:#64748b;
   --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
   --grid:rgba(255,255,255,0.06);
@@ -18,84 +18,94 @@
   --yellow:#f59e0b;--ydim:rgba(245,158,11,0.15);
   --blue:#38bdf8;--bdim:rgba(56,189,248,0.15);
   --danger:#ef4444;--ddim:rgba(239,68,68,0.15);
-  --sb:64px;--r:12px;
+  --sb:68px;--r:12px;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;line-height:1.5}
+html,body{height:100%}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  display:flex;overflow:hidden;line-height:1.5}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
 
-/* SIDEBAR */
-.sb{width:var(--sb);min-height:100vh;background:var(--card3);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;padding:14px 0 14px;
-  position:fixed;top:0;left:0;z-index:200;gap:2px}
-.sb-logo{width:38px;height:38px;background:var(--red);border-radius:10px;
-  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;
-  color:#fff;letter-spacing:-.01em;margin-bottom:18px;
-  box-shadow:0 0 24px rgba(255,31,45,.45)}
+/* ── SIDEBAR ── */
+.sb{width:var(--sb);height:100vh;background:var(--card3);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;padding:14px 0;
+  position:fixed;top:0;left:0;z-index:200;gap:2px;flex-shrink:0}
+.sb-logo{width:40px;height:40px;background:var(--red);border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;
+  color:#fff;margin-bottom:16px;box-shadow:0 0 22px rgba(255,31,45,.5);letter-spacing:.01em}
 .sb-sep{width:28px;height:1px;background:var(--border);margin:6px 0}
-.ni{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;position:relative;transition:all .2s;color:var(--dim)}
+.ni{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;transition:all .18s;color:var(--dim);user-select:none}
+.ni svg{transition:all .18s}
 .ni:hover{background:rgba(255,255,255,.06);color:var(--muted)}
-.ni.on{background:rgba(255,31,45,.15);color:var(--red)}
-.ni.on::before{content:'';position:absolute;left:-2px;width:3px;height:22px;
-  background:var(--red);border-radius:0 3px 3px 0}
-.ni-tip{position:absolute;left:50px;background:#1e1e2e;border:1px solid var(--border2);
-  color:var(--text);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:7px;
-  white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(-6px);
-  transition:all .18s;z-index:300;box-shadow:0 4px 20px rgba(0,0,0,.5)}
-.ni:hover .ni-tip{opacity:1;transform:translateX(0)}
+.ni.on{background:rgba(255,31,45,.18);color:var(--red)}
+.ni.on::before{content:'';position:absolute;left:0;width:3px;height:26px;
+  background:var(--red);border-radius:0 3px 3px 0;box-shadow:0 0 8px rgba(255,31,45,.6)}
+.tip{position:absolute;left:54px;top:50%;transform:translateY(-50%) translateX(-6px);
+  background:#1e1e2e;border:1px solid var(--border2);color:var(--text);
+  font-size:.7rem;font-weight:600;padding:5px 11px;border-radius:8px;
+  white-space:nowrap;pointer-events:none;opacity:0;transition:all .16s;
+  z-index:300;box-shadow:0 4px 20px rgba(0,0,0,.6)}
+.ni:hover .tip{opacity:1;transform:translateY(-50%) translateX(0)}
 
-/* MAIN */
-.main{margin-left:var(--sb);flex:1;display:flex;flex-direction:column;min-height:100vh}
+/* ── MAIN ── */
+.main{margin-left:var(--sb);flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
-/* HEADER */
-.hdr{background:linear-gradient(135deg,#0d0d1f,#10101e,#0a0a15);border-bottom:1px solid var(--border);
-  padding:16px 26px;display:flex;align-items:center;justify-content:space-between;gap:14px;
-  position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.hdr-eye{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--red);margin-bottom:3px}
-.hdr-title{font-size:1.25rem;font-weight:900;letter-spacing:-.03em;
-  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,.55));
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#0d0d1f,#10101e,#0a0a15);
+  border-bottom:1px solid var(--border);padding:15px 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-shrink:0}
+.hdr-eye{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;color:var(--red);margin-bottom:3px}
+.hdr-title{font-size:1.2rem;font-weight:900;letter-spacing:-.03em;
+  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,.5));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hdr-sub{font-size:.7rem;color:var(--dim);margin-top:3px}
-.hdr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.hdr-sub{font-size:.68rem;color:var(--dim);margin-top:3px}
+.hdr-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .hdr-card{background:var(--card);border:1px solid var(--border);border-radius:10px;
-  padding:7px 13px;display:flex;align-items:center;gap:8px;font-size:.72rem}
-.hdr-ico{color:var(--red);width:14px;height:14px;flex-shrink:0}
-.hdr-card label{display:block;font-size:.6rem;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
-.hdr-card span{color:var(--text);font-weight:700}
-.conn-dot{width:7px;height:7px;border-radius:50%;background:var(--red);
-  box-shadow:0 0 8px rgba(255,31,45,.6);animation:pulse 2s infinite}
+  padding:7px 13px;display:flex;align-items:center;gap:8px}
+.hdr-card svg{color:var(--red);width:14px;height:14px;flex-shrink:0}
+.hdr-card label{display:block;font-size:.58rem;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.hdr-card span{font-size:.73rem;color:var(--text);font-weight:700}
+.cdot{width:7px;height:7px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 8px rgba(255,31,45,.6);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.pg-lbl{font-size:.72rem;font-weight:700;color:var(--muted);
+  background:rgba(255,31,45,.1);border:1px solid rgba(255,31,45,.2);
+  border-radius:7px;padding:4px 11px;color:var(--red)}
 
-/* FILTER BAR */
+/* ── FILTER BAR ── */
 .fbar{background:var(--bg2);border-bottom:1px solid var(--border);
-  padding:12px 26px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+  padding:11px 26px;display:flex;flex-wrap:wrap;gap:9px;align-items:flex-end;flex-shrink:0}
 .fg{display:flex;flex-direction:column;gap:3px}
-.fg label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim)}
+.fg label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim)}
 select,input[type=text]{background:var(--card);color:var(--text);border:1px solid var(--border);
-  border-radius:8px;padding:6px 10px;font-size:.77rem;font-family:inherit;
-  outline:none;cursor:pointer;transition:border-color .2s;min-width:122px}
+  border-radius:8px;padding:6px 9px;font-size:.76rem;font-family:inherit;
+  outline:none;cursor:pointer;transition:border-color .2s;min-width:118px}
 select:focus,input[type=text]:focus{border-color:var(--red)}
-input[type=text]{cursor:text;min-width:110px}
+input[type=text]{cursor:text;min-width:105px}
 input[type=text]::placeholder{color:var(--dim)}
 .btn-cl{background:transparent;color:var(--dim);border:1px solid var(--border);border-radius:8px;
-  padding:6px 13px;font-size:.73rem;font-weight:700;cursor:pointer;transition:all .2s;
+  padding:6px 12px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;
   font-family:inherit;align-self:flex-end}
 .btn-cl:hover{color:var(--text);border-color:var(--border2);background:rgba(255,255,255,.05)}
 
-/* CONTENT */
-.cnt{flex:1;padding:22px 26px;display:flex;flex-direction:column;gap:26px}
-section{scroll-margin-top:120px}
+/* ── PAGE CONTAINER ── */
+.pages{flex:1;overflow:hidden;position:relative}
+.page{position:absolute;inset:0;overflow-y:auto;padding:24px 26px;
+  display:none;opacity:0;transition:opacity .22s ease}
+.page.active{display:block;opacity:1}
+@keyframes pgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.page.active{animation:pgIn .25s ease forwards}
 
-/* SECTION HEADER */
-.sh{display:flex;align-items:center;gap:9px;margin-bottom:13px}
-.sh-bar{width:3px;height:16px;background:var(--red);border-radius:2px}
-.sh-txt{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--muted)}
+/* ── SECTION HEADER ── */
+.sh{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.sh-bar{width:3px;height:17px;background:var(--red);border-radius:2px;box-shadow:0 0 8px rgba(255,31,45,.5)}
+.sh-t{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.sh-ct{margin-left:auto;font-size:.68rem;color:var(--dim)}
 
-/* KPI GRID */
-.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+/* ── KPI GRID ── */
+.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:22px}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;
   position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s;cursor:default}
 .kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
@@ -104,7 +114,7 @@ section{scroll-margin-top:120px}
 .kpi.ylw::after{background:linear-gradient(90deg,var(--yellow),transparent)}
 .kpi.blu::after{background:linear-gradient(90deg,var(--blue),transparent)}
 .kpi.dng::after{background:linear-gradient(90deg,var(--danger),transparent)}
-.kpi:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.5);border-color:var(--border2)}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.5);border-color:var(--border2)}
 .kpi.mk{box-shadow:0 0 28px rgba(255,31,45,.12);border-color:rgba(255,31,45,.22)}
 .kpi-row{display:flex;align-items:flex-start;gap:11px}
 .kpi-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -114,108 +124,104 @@ section{scroll-margin-top:120px}
 .kpi.blu .kpi-ic{background:var(--bdim);color:var(--blue)}
 .kpi.dng .kpi-ic{background:var(--ddim);color:var(--danger)}
 .kpi-b{flex:1;min-width:0}
-.kpi-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim)}
-.kpi-val{font-size:1.32rem;font-weight:800;letter-spacing:-.03em;margin:3px 0;line-height:1.1;
+.kpi-lbl{font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim)}
+.kpi-val{font-size:1.28rem;font-weight:800;letter-spacing:-.03em;margin:3px 0;line-height:1.1;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kpi.red .kpi-val{color:var(--red)}.kpi.grn .kpi-val{color:var(--green)}
 .kpi.ylw .kpi-val{color:var(--yellow)}.kpi.blu .kpi-val{color:var(--blue)}
 .kpi.dng .kpi-val{color:var(--danger)}
-.kpi-d{font-size:.66rem;font-weight:700;display:inline-flex;align-items:center;gap:3px}
+.kpi-d{font-size:.65rem;font-weight:700;display:inline-flex;align-items:center;gap:3px}
 .up{color:var(--green)}.dn{color:var(--danger)}.neu{color:var(--dim)}
-.up-b{color:var(--danger)}.dn-b{color:var(--green)}
-.kpi-sub{font-size:.62rem;color:var(--dim);margin-top:4px}
+.kpi-sub{font-size:.61rem;color:var(--dim);margin-top:4px}
 
-/* CHART GRID */
+/* ── CHART GRID ── */
 .cg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:17px;
-  transition:box-shadow .2s}
-.cc:hover{box-shadow:0 8px 36px rgba(0,0,0,.4)}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:17px;transition:box-shadow .2s}
+.cc:hover{box-shadow:0 8px 32px rgba(0,0,0,.4)}
 .cc.full{grid-column:1/-1}
 .cc-hdr{margin-bottom:12px}
-.cc-t{font-size:.82rem;font-weight:700;color:var(--text)}
-.cc-s{font-size:.68rem;color:var(--muted);margin-top:2px}
+.cc-t{font-size:.81rem;font-weight:700;color:var(--text)}
+.cc-s{font-size:.67rem;color:var(--muted);margin-top:2px}
 .cw{position:relative}
-.cw.h240{height:240px}.cw.h280{height:280px}.cw.h200{height:200px}.cw.h300{height:300px}
+.cw.h220{height:220px}.cw.h260{height:260px}.cw.h300{height:300px}.cw.h180{height:180px}
 .ins{margin-top:10px;padding:7px 11px;background:rgba(255,255,255,.03);
-  border-left:3px solid var(--red);border-radius:0 6px 6px 0;font-size:.69rem;color:var(--muted);line-height:1.5}
+  border-left:3px solid var(--red);border-radius:0 6px 6px 0;
+  font-size:.69rem;color:var(--muted);line-height:1.5}
 .ins.ok{border-left-color:var(--green)}.ins.w{border-left-color:var(--yellow)}.ins.d{border-left-color:var(--danger)}
 
-/* TABLES */
+/* ── TABLES ── */
 .tc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
 .thd{padding:13px 17px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between}
-.thd-l .tt{font-size:.8rem;font-weight:700;color:var(--text)}
-.thd-l .ts{font-size:.67rem;color:var(--muted);margin-top:2px}
-.tbg{font-size:.67rem;font-weight:700;padding:3px 10px;border-radius:20px;
+.tt{font-size:.79rem;font-weight:700;color:var(--text)}
+.ts{font-size:.66rem;color:var(--muted);margin-top:2px}
+.tbg{font-size:.66rem;font-weight:700;padding:3px 10px;border-radius:20px;
   background:rgba(255,31,45,.12);color:var(--red);border:1px solid rgba(255,31,45,.22)}
 .ox{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
 th{background:rgba(255,255,255,.04);padding:8px 13px;text-align:left;
-  font-size:.61rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;
+  font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;
   color:var(--dim);border-bottom:1px solid var(--border);white-space:nowrap}
 th.r,td.r{text-align:right}
-td{padding:9px 13px;font-size:.76rem;color:var(--text);
+td{padding:9px 13px;font-size:.75rem;color:var(--text);
   border-bottom:1px solid rgba(255,255,255,.03);transition:background .1s}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:rgba(255,255,255,.03)}
-.bd{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:.64rem;font-weight:700;white-space:nowrap}
+.bd{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:.63rem;font-weight:700;white-space:nowrap}
 .bd-a{background:var(--gdim);color:var(--green)}
 .bd-g{background:var(--ydim);color:var(--yellow)}
 .bd-r{background:var(--ddim);color:var(--danger)}
 .bd-x{background:rgba(100,116,139,.15);color:var(--dim)}
 .ac{background:rgba(255,31,45,.04)!important}
 .ac:hover{background:rgba(255,31,45,.07)!important}
-.ag0{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;font-size:.63rem;font-weight:700}
+.ag0{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;font-size:.62rem;font-weight:700}
 .ag-ok{background:rgba(34,197,94,.15);color:var(--green)}
 .ag-w{background:rgba(245,158,11,.15);color:var(--yellow)}
 .ag-a{background:rgba(249,115,22,.15);color:#f97316}
 .ag-c{background:rgba(255,31,45,.18);color:var(--red)}
-.empty{padding:30px;text-align:center;color:var(--dim);font-size:.8rem}
+.empty{padding:30px;text-align:center;color:var(--dim);font-size:.79rem}
 
-/* FOOTER BAR */
-.ftr{background:var(--card3);border-top:1px solid var(--border);padding:14px 26px;
-  display:grid;grid-template-columns:repeat(4,1fr)}
-.fi{display:flex;align-items:center;gap:11px;padding:0 20px;border-right:1px solid var(--border)}
+/* ── FOOTER BAR ── */
+.ftr{background:var(--card3);border-top:1px solid var(--border);padding:13px 26px;
+  display:grid;grid-template-columns:repeat(4,1fr);flex-shrink:0}
+.fi{display:flex;align-items:center;gap:11px;padding:0 18px;border-right:1px solid var(--border)}
 .fi:first-child{padding-left:0}.fi:last-child{border-right:none}
-.fi-ico{width:34px;height:34px;border-radius:50%;background:rgba(255,31,45,.1);
+.fi-ico{width:32px;height:32px;border-radius:50%;background:rgba(255,31,45,.1);
   border:1px solid rgba(255,31,45,.2);display:flex;align-items:center;justify-content:center;
   color:var(--red);flex-shrink:0}
-.fi-t label{display:block;font-size:.59rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim)}
-.fi-t span{font-size:1rem;font-weight:800;color:var(--text)}
+.fi-t label{display:block;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim)}
+.fi-t span{font-size:.95rem;font-weight:800;color:var(--text)}
 
-/* STATES */
-.state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;min-height:60vh;text-align:center;padding:40px}
-.ring{width:46px;height:46px;border:3px solid rgba(255,31,45,.15);border-top-color:var(--red);
+/* ── STATES ── */
+.state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;text-align:center;padding:40px;z-index:10;background:var(--bg)}
+.ring{width:44px;height:44px;border:3px solid rgba(255,31,45,.15);border-top-color:var(--red);
   border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .st-t{font-size:.95rem;font-weight:700}
-.st-s{font-size:.79rem;color:var(--muted);max-width:340px}
-.btn-rt{display:inline-flex;align-items:center;gap:7px;background:rgba(255,31,45,.15);
-  color:var(--red);border:1px solid rgba(255,31,45,.3);border-radius:10px;padding:9px 18px;
+.st-s{font-size:.78rem;color:var(--muted);max-width:340px}
+.btn-rt{display:inline-flex;align-items:center;gap:7px;background:rgba(255,31,45,.15);color:var(--red);
+  border:1px solid rgba(255,31,45,.3);border-radius:10px;padding:9px 18px;
   font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
 .btn-rt:hover{background:rgba(255,31,45,.25)}
 
-/* TOAST */
-.toast{position:fixed;bottom:22px;right:22px;background:#1a1a2e;border:1px solid rgba(255,31,45,.3);
-  color:var(--text);border-radius:10px;padding:10px 15px;font-size:.78rem;font-weight:600;
+/* ── TOAST ── */
+.toast{position:fixed;bottom:20px;right:20px;background:#1a1a2e;border:1px solid rgba(255,31,45,.3);
+  color:var(--text);border-radius:10px;padding:10px 15px;font-size:.77rem;font-weight:600;
   display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,.5);
   z-index:9999;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
 .toast.show{transform:translateY(0);opacity:1}
 
-@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.ani{animation:fu .3s ease forwards}
-
-/* RESPONSIVE */
+/* ── RESPONSIVE ── */
 @media(max-width:1200px){.kg{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:1050px){.cg{grid-template-columns:1fr}.cc.full{grid-column:1}}
+@media(max-width:1000px){.cg{grid-template-columns:1fr}.cc.full{grid-column:1}}
 @media(max-width:768px){
   :root{--sb:0px}
   .sb{display:none}
-  .cnt{padding:14px}
-  .fbar,.hdr{padding:12px 14px}
+  .page{padding:14px}
+  .fbar,.hdr{padding:10px 14px}
   .kg{grid-template-columns:repeat(2,1fr)}
-  .ftr{grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
+  .ftr{grid-template-columns:repeat(2,1fr);padding:10px 14px}
   .fi{border-right:none;padding:8px 0;border-bottom:1px solid var(--border)}
 }
 @media(max-width:480px){.kg{grid-template-columns:1fr}}
@@ -224,31 +230,31 @@ tr:hover td{background:rgba(255,255,255,.03)}
 <body>
 
 <!-- SIDEBAR -->
-<nav class="sb" id="sb">
+<nav class="sb">
   <div class="sb-logo">TRI</div>
-  <div class="ni on" data-sec="s-visao" onclick="scrollTo('s-visao')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    <span class="ni-tip">Visão Geral</span>
+  <div class="ni on" data-pg="pg-visao" onclick="showPage('pg-visao')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span class="tip">Visão Geral</span>
   </div>
-  <div class="ni" data-sec="s-propostas" onclick="scrollTo('s-propostas')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-    <span class="ni-tip">Propostas</span>
+  <div class="ni" data-pg="pg-financeiro" onclick="showPage('pg-financeiro')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <span class="tip">Financeiro</span>
   </div>
-  <div class="ni" data-sec="s-financeiro" onclick="scrollTo('s-financeiro')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-    <span class="ni-tip">Financeiro</span>
+  <div class="ni" data-pg="pg-propostas" onclick="showPage('pg-propostas')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span class="tip">Propostas</span>
   </div>
-  <div class="ni" data-sec="s-unidades" onclick="scrollTo('s-unidades')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-    <span class="ni-tip">Unidades</span>
+  <div class="ni" data-pg="pg-unidades" onclick="showPage('pg-unidades')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    <span class="tip">Unidades</span>
   </div>
-  <div class="ni" data-sec="s-aging" onclick="scrollTo('s-aging')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    <span class="ni-tip">Aging</span>
+  <div class="ni" data-pg="pg-aging" onclick="showPage('pg-aging')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span class="tip">Aging</span>
   </div>
-  <div class="ni" data-sec="s-tabela" onclick="scrollTo('s-tabela')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
-    <span class="ni-tip">Tabela</span>
+  <div class="ni" data-pg="pg-tabela" onclick="showPage('pg-tabela')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+    <span class="tip">Tabela</span>
   </div>
 </nav>
 
@@ -257,22 +263,20 @@ tr:hover td{background:rgba(255,255,255,.03)}
 
   <!-- HEADER -->
   <header class="hdr">
-    <div class="hdr-l">
+    <div>
       <div class="hdr-eye">Plataforma Trílogo</div>
       <div class="hdr-title">DASHBOARD FINANCEIRO</div>
       <div class="hdr-sub" id="hdrSub">Carregando dados…</div>
     </div>
-    <div class="hdr-right">
+    <div class="hdr-r">
+      <span class="pg-lbl" id="pgLbl">Visão Geral</span>
       <div class="hdr-card">
-        <svg class="hdr-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        <div>
-          <label>Última atualização</label>
-          <span id="lastUpd">—</span>
-        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div><label>Atualizado em</label><span id="lastUpd">—</span></div>
       </div>
-      <div class="hdr-card">
-        <div class="conn-dot" id="cDot"></div>
-        <span id="cTxt" style="font-size:.72rem;color:var(--muted)">Conectando…</span>
+      <div class="hdr-card" style="gap:7px">
+        <div class="cdot" id="cDot"></div>
+        <span id="cTxt" style="font-size:.71rem;color:var(--muted)">Conectando…</span>
       </div>
     </div>
   </header>
@@ -312,174 +316,180 @@ tr:hover td{background:rgba(255,255,255,.03)}
     <button class="btn-cl" onclick="clearFilters()">↺ Limpar</button>
   </div>
 
-  <!-- LOADING STATE -->
-  <div class="state" id="stLoad">
-    <div class="ring"></div>
-    <div class="st-t">Carregando dados…</div>
-    <div class="st-s">Buscando base de propostas. Aguarde um instante.</div>
-  </div>
+  <!-- PAGES -->
+  <div class="pages" id="pagesWrap">
 
-  <!-- ERROR STATE -->
-  <div class="state" id="stErr" style="display:none">
-    <div style="font-size:2.2rem">⚠️</div>
-    <div class="st-t" style="color:var(--danger)">Falha ao carregar dados</div>
-    <div class="st-s" id="errMsg"></div>
-    <button class="btn-rt" onclick="loadData()">↺ Tentar novamente</button>
-  </div>
-
-  <!-- DASHBOARD -->
-  <div id="dash" style="display:none;flex-direction:column">
-
-    <div class="cnt">
-
-      <!-- VISÃO GERAL -->
-      <section id="s-visao">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Visão Geral — KPIs</div></div>
-        <div class="kg" id="kpiGrid"></div>
-      </section>
-
-      <!-- FINANCEIRO (charts principais) -->
-      <section id="s-financeiro">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Financeiro</div></div>
-        <div class="cg">
-          <div class="cc full">
-            <div class="cc-hdr"><div class="cc-t">Evolução Mensal — Proposto vs. Aprovado</div><div class="cc-s">Comparativo por mês/ano da data da proposta</div></div>
-            <div class="cw h280"><canvas id="chEv"></canvas></div>
-            <div class="ins" id="iEv"></div>
-          </div>
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Valor por Status da Proposta</div><div class="cc-s">Distribuição financeira por status</div></div>
-            <div class="cw h240"><canvas id="chSV"></canvas></div>
-            <div class="ins" id="iSV"></div>
-          </div>
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Quantidade por Status</div><div class="cc-s">Proporção de propostas por situação</div></div>
-            <div class="cw h240"><canvas id="chSC"></canvas></div>
-            <div class="ins" id="iSC"></div>
-          </div>
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Status de Execução</div><div class="cc-s">Situação operacional das propostas</div></div>
-            <div class="cw h240"><canvas id="chEx"></canvas></div>
-            <div class="ins" id="iEx"></div>
-          </div>
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Pendentes por Mês</div><div class="cc-s">Propostas aguardando aprovação por mês</div></div>
-            <div class="cw h240"><canvas id="chPM"></canvas></div>
-            <div class="ins" id="iPM"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- UNIDADES -->
-      <section id="s-unidades">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Unidades</div></div>
-        <div class="cg">
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Valor Proposto por Unidade</div><div class="cc-s">Top 10 por volume proposto</div></div>
-            <div class="cw h300"><canvas id="chUP"></canvas></div>
-            <div class="ins" id="iUP"></div>
-          </div>
-          <div class="cc">
-            <div class="cc-hdr"><div class="cc-t">Valor Aprovado por Unidade</div><div class="cc-s">Top 10 por valor aprovado</div></div>
-            <div class="cw h300"><canvas id="chUA"></canvas></div>
-            <div class="ins" id="iUA"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- AGING -->
-      <section id="s-aging">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Aging — Propostas Pendentes</div></div>
-        <div class="cg">
-          <div class="cc full">
-            <div class="cc-hdr"><div class="cc-t">Aging por Faixa de Dias</div><div class="cc-s">Valor aguardando por tempo em análise</div></div>
-            <div class="cw h240"><canvas id="chAg"></canvas></div>
-            <div class="ins" id="iAg"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROPOSTAS (tabelas) -->
-      <section id="s-propostas">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Propostas</div></div>
-        <div style="display:flex;flex-direction:column;gap:16px">
-
-          <div class="tc">
-            <div class="thd">
-              <div class="thd-l"><div class="tt">Top 10 — Maiores Propostas</div><div class="ts">Por valor proposto</div></div>
-              <span class="tbg" id="bdTop"></span>
-            </div>
-            <div class="ox"><table><thead><tr>
-              <th>#</th><th>Nº Proposta</th><th>Nº Ticket</th><th>Unidade</th><th>Descrição</th><th>Status</th><th class="r">Valor</th>
-            </tr></thead><tbody id="tbTop"></tbody></table></div>
-          </div>
-
-          <div class="tc">
-            <div class="thd">
-              <div class="thd-l"><div class="tt">Propostas Críticas</div><div class="ts">Aguardando Aprovação há mais de 15 dias</div></div>
-              <span class="tbg" id="bdCrit" style="background:rgba(255,31,45,.18);border-color:rgba(255,31,45,.35)"></span>
-            </div>
-            <div class="ox"><table><thead><tr>
-              <th>Nº Proposta</th><th>Nº Ticket</th><th>Unidade</th><th>Descrição</th><th>Data</th><th class="r">Valor</th><th>Aging</th><th>Obs.</th>
-            </tr></thead><tbody id="tbCrit"></tbody></table></div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- TABELA MENSAL -->
-      <section id="s-tabela">
-        <div class="sh"><div class="sh-bar"></div><div class="sh-txt">Resumo Mensal</div></div>
-        <div class="tc">
-          <div class="thd">
-            <div class="thd-l"><div class="tt">Resumo por Mês/Ano</div><div class="ts">Ordenado cronologicamente · Vencida = Aguardando &gt; 30 dias</div></div>
-          </div>
-          <div class="ox"><table><thead><tr>
-            <th>Mês/Ano</th><th class="r">Propostas</th><th class="r">Total Proposto</th>
-            <th class="r">Aprovado</th><th class="r">Aguardando</th><th class="r">Recusado</th>
-            <th class="r">Taxa</th><th class="r">Ticket Médio</th>
-          </tr></thead><tbody id="tbMen"></tbody></table></div>
-        </div>
-      </section>
-
-    </div><!-- /cnt -->
-
-    <!-- FOOTER BAR -->
-    <div class="ftr" id="ftrBar">
-      <div class="fi"><div class="fi-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="fi-t"><label>Total de Propostas</label><span id="ft1">—</span></div></div>
-      <div class="fi"><div class="fi-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="fi-t"><label>Valor Total Proposto</label><span id="ft2">—</span></div></div>
-      <div class="fi"><div class="fi-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="fi-t"><label>Valor Aguardando</label><span id="ft3">—</span></div></div>
-      <div class="fi"><div class="fi-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="fi-t"><label>Ticket Médio</label><span id="ft4">—</span></div></div>
+    <!-- STATE: LOADING -->
+    <div class="state" id="stLoad">
+      <div class="ring"></div>
+      <div class="st-t">Carregando dados…</div>
+      <div class="st-s">Buscando base de propostas.</div>
     </div>
 
-  </div><!-- /dash -->
-</div><!-- /main -->
+    <!-- STATE: ERROR -->
+    <div class="state" id="stErr" style="display:none">
+      <div style="font-size:2rem">⚠️</div>
+      <div class="st-t" style="color:var(--danger)">Falha ao carregar</div>
+      <div class="st-s" id="errMsg"></div>
+      <button class="btn-rt" onclick="loadData()">↺ Tentar novamente</button>
+    </div>
 
+    <!-- PAGE 1: VISÃO GERAL -->
+    <div class="page" id="pg-visao">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Visão Geral</div><div class="sh-ct" id="shCt"></div></div>
+      <div class="kg" id="kpiGrid"></div>
+      <div class="cg">
+        <div class="cc full">
+          <div class="cc-hdr"><div class="cc-t">Evolução Mensal — Proposto vs. Aprovado</div><div class="cc-s">Comparativo por mês/ano</div></div>
+          <div class="cw h260"><canvas id="chEv"></canvas></div>
+          <div class="ins" id="iEv"></div>
+        </div>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Distribuição por Status</div><div class="cc-s">Proporção de propostas</div></div>
+          <div class="cw h220"><canvas id="chSC"></canvas></div>
+          <div class="ins" id="iSC"></div>
+        </div>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Status de Execução</div><div class="cc-s">Situação operacional</div></div>
+          <div class="cw h220"><canvas id="chEx"></canvas></div>
+          <div class="ins" id="iEx"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2: FINANCEIRO -->
+    <div class="page" id="pg-financeiro">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Financeiro</div></div>
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Valor por Status da Proposta</div><div class="cc-s">Distribuição financeira</div></div>
+          <div class="cw h260"><canvas id="chSV"></canvas></div>
+          <div class="ins" id="iSV"></div>
+        </div>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Pendentes por Mês</div><div class="cc-s">Aguardando aprovação por mês</div></div>
+          <div class="cw h260"><canvas id="chPM"></canvas></div>
+          <div class="ins" id="iPM"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3: PROPOSTAS -->
+    <div class="page" id="pg-propostas">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Propostas</div></div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="tc">
+          <div class="thd">
+            <div><div class="tt">Top 10 — Maiores Propostas</div><div class="ts">Por valor proposto</div></div>
+            <span class="tbg" id="bdTop"></span>
+          </div>
+          <div class="ox"><table><thead><tr>
+            <th>#</th><th>Nº Proposta</th><th>Nº Ticket</th><th>Unidade</th><th>Descrição</th><th>Status</th><th class="r">Valor</th>
+          </tr></thead><tbody id="tbTop"></tbody></table></div>
+        </div>
+        <div class="tc">
+          <div class="thd">
+            <div><div class="tt">Propostas Críticas</div><div class="ts">Aguardando há mais de 15 dias</div></div>
+            <span class="tbg" id="bdCrit"></span>
+          </div>
+          <div class="ox"><table><thead><tr>
+            <th>Nº Proposta</th><th>Nº Ticket</th><th>Unidade</th><th>Descrição</th><th>Data</th><th class="r">Valor</th><th>Dias</th><th>Observação</th>
+          </tr></thead><tbody id="tbCrit"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4: UNIDADES -->
+    <div class="page" id="pg-unidades">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Unidades</div></div>
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Valor Proposto por Unidade</div><div class="cc-s">Top 10 por volume proposto</div></div>
+          <div class="cw h300"><canvas id="chUP"></canvas></div>
+          <div class="ins" id="iUP"></div>
+        </div>
+        <div class="cc">
+          <div class="cc-hdr"><div class="cc-t">Valor Aprovado por Unidade</div><div class="cc-s">Top 10 por valor aprovado</div></div>
+          <div class="cw h300"><canvas id="chUA"></canvas></div>
+          <div class="ins" id="iUA"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 5: AGING -->
+    <div class="page" id="pg-aging">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Aging — Propostas Pendentes</div></div>
+      <div class="cg">
+        <div class="cc full">
+          <div class="cc-hdr"><div class="cc-t">Aging por Faixa de Dias</div><div class="cc-s">Valor aguardando por tempo em análise</div></div>
+          <div class="cw h220"><canvas id="chAg"></canvas></div>
+          <div class="ins" id="iAg"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 6: TABELA -->
+    <div class="page" id="pg-tabela">
+      <div class="sh"><div class="sh-bar"></div><div class="sh-t">Resumo Mensal</div></div>
+      <div class="tc">
+        <div class="thd">
+          <div><div class="tt">Resumo por Mês/Ano</div><div class="ts">Ordenado cronologicamente</div></div>
+        </div>
+        <div class="ox"><table><thead><tr>
+          <th>Mês/Ano</th><th class="r">Propostas</th><th class="r">Total Proposto</th>
+          <th class="r">Aprovado</th><th class="r">Aguardando</th><th class="r">Recusado</th>
+          <th class="r">Taxa</th><th class="r">Ticket Médio</th>
+        </tr></thead><tbody id="tbMen"></tbody></table></div>
+      </div>
+    </div>
+
+  </div><!-- /pages -->
+
+  <!-- FOOTER BAR -->
+  <div class="ftr">
+    <div class="fi">
+      <div class="fi-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="fi-t"><label>Total Propostas</label><span id="ft1">—</span></div>
+    </div>
+    <div class="fi">
+      <div class="fi-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="fi-t"><label>Valor Total</label><span id="ft2">—</span></div>
+    </div>
+    <div class="fi">
+      <div class="fi-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="fi-t"><label>Aguardando</label><span id="ft3">—</span></div>
+    </div>
+    <div class="fi">
+      <div class="fi-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="fi-t"><label>Ticket Médio</label><span id="ft4">—</span></div>
+    </div>
+  </div>
+
+</div><!-- /main -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ============================================================
-// GLOBALS
-// ============================================================
-let DB=[], FD=[], CH={};
-const TODAY=new Date(); TODAY.setHours(0,0,0,0);
+// ── GLOBALS ──────────────────────────────────────────────────
+let DB=[],FD=[],PD=[],CH={},CURRENT_PAGE='pg-visao';
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
 const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const PAGE_NAMES={'pg-visao':'Visão Geral','pg-financeiro':'Financeiro',
+  'pg-propostas':'Propostas','pg-unidades':'Unidades','pg-aging':'Aging','pg-tabela':'Tabela'};
 
-// ============================================================
-// FORMATTERS
-// ============================================================
+// ── FORMATTERS ───────────────────────────────────────────────
 const fR=v=>'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fP=v=>Number(v).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
 const fN=v=>Number(v).toLocaleString('pt-BR');
 const fDt=s=>s?new Date(s+'T00:00:00').toLocaleDateString('pt-BR'):'—';
 const fMes=d=>MS[d.getMonth()]+'/'+d.getFullYear();
-const srtM=(a,b)=>{const[ma,ya]=a.split('/');const[mb,yb]=b.split('/');return(+ya*12+MS.indexOf(ma))-(+yb*12+MS.indexOf(mb));};
+const srtM=(a,b)=>{const[ma,ya]=a.split('/');const[mb,yb]=b.split('/');
+  return(+ya*12+MS.indexOf(ma))-(+yb*12+MS.indexOf(mb));};
 
-// ============================================================
-// DATA LOADING
-// ============================================================
+// ── DATA LOADING ─────────────────────────────────────────────
 async function loadData(){
-  showState('load');
+  document.getElementById('stLoad').style.display='flex';
+  document.getElementById('stErr').style.display='none';
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   try{
     const r=await fetch('/dados.json?t='+Date.now());
     if(!r.ok)throw new Error('HTTP '+r.status);
@@ -488,54 +498,43 @@ async function loadData(){
     DB=arr.map(enrichRow);
     buildSelects();
     document.getElementById('stLoad').style.display='none';
-    document.getElementById('stErr').style.display='none';
-    const d=document.getElementById('dash');
-    d.style.display='flex';d.style.flexDirection='column';
-    setConn('ok','Dados carregados');
     document.getElementById('lastUpd').textContent=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    setConn('ok','Dados carregados');
     applyFilters();
+    showPage(CURRENT_PAGE,false);
     showToast('✓ '+DB.length+' propostas carregadas');
   }catch(e){
-    showState('err');
-    document.getElementById('errMsg').textContent=e.message+' · Verifique se o dados.json foi publicado.';
-    setConn('err','Falha');
+    document.getElementById('stLoad').style.display='none';
+    document.getElementById('stErr').style.display='flex';
+    document.getElementById('errMsg').textContent=e.message;
+    setConn('err','Falha ao carregar');
   }
 }
 
 function enrichRow(d){
   const dp=d.dp?new Date(d.dp+'T00:00:00'):null;
   const dias=dp?Math.floor((TODAY-dp)/86400000):0;
-  return{
-    ...d,
-    dpDate:dp,
-    vlNum:typeof d.vl==='number'?d.vl:0,
-    mesAno:dp?fMes(dp):'',
-    dias,
+  return{...d,dpDate:dp,vlNum:typeof d.vl==='number'?d.vl:0,
+    mesAno:dp?fMes(dp):'',dias,
     aging:dias<=7?'0–7 dias':dias<=15?'8–15 dias':dias<=30?'16–30 dias':'+30 dias',
     critica:d.sp==='Aguardando Aprovação'&&dias>15,
     ob:d.ob&&d.ob!=='Sem observacao'&&d.ob!=='Sem observação'?d.ob:'—',
-    se:d.se||'Não informado',
-    un:d.un||'Não informado',
-  };
+    se:d.se||'Não informado',un:d.un||'Não informado'};
 }
 
-// ============================================================
-// SELECTS DINÂMICOS
-// ============================================================
+// ── SELECTS ──────────────────────────────────────────────────
 function buildSelects(){
   const uns=[...new Set(DB.map(d=>d.un).filter(Boolean))].sort();
-  const sel=document.getElementById('fUn');
-  sel.innerHTML='<option value="">Todas</option>';
-  uns.forEach(u=>{const o=document.createElement('option');o.value=u;o.textContent=u;sel.appendChild(o);});
+  const u=document.getElementById('fUn');
+  u.innerHTML='<option value="">Todas</option>';
+  uns.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;u.appendChild(o);});
   const ses=[...new Set(DB.map(d=>d.se).filter(Boolean))].sort();
-  const ssel=document.getElementById('fSE');
-  ssel.innerHTML='<option value="">Todos</option>';
-  ses.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;ssel.appendChild(o);});
+  const s=document.getElementById('fSE');
+  s.innerHTML='<option value="">Todos</option>';
+  ses.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;s.appendChild(o);});
 }
 
-// ============================================================
-// FILTERS
-// ============================================================
+// ── FILTERS ──────────────────────────────────────────────────
 function getRange(p){
   const e=new Date(TODAY);let s=null;
   if(p==='7d'){s=new Date(TODAY);s.setDate(s.getDate()-6);}
@@ -575,19 +574,17 @@ function filterData(data,range,fs){
 function applyFilters(){
   if(!DB.length)return;
   const p=document.getElementById('fPer').value;
-  const fs={
-    un:document.getElementById('fUn').value,
-    sp:document.getElementById('fSP').value,
+  const fs={un:document.getElementById('fUn').value,sp:document.getElementById('fSP').value,
     se:document.getElementById('fSE').value,
     tk:document.getElementById('fTk').value.trim().toLowerCase(),
-    pr:document.getElementById('fPr').value.trim().toLowerCase(),
-  };
+    pr:document.getElementById('fPr').value.trim().toLowerCase()};
   const range=getRange(p);
   FD=filterData(DB,range,fs);
-  const prevRange=getPrev(p,range);
-  const PD=prevRange?filterData(DB,prevRange,{un:'',sp:'',se:'',tk:'',pr:''}):[];
-  renderAll(FD,PD);
+  const pr=getPrev(p,range);
+  PD=pr?filterData(DB,pr,{un:'',sp:'',se:'',tk:'',pr:''}):[];
   updateHdr();
+  renderFooter(kpis(FD));
+  renderPage(CURRENT_PAGE);
 }
 function clearFilters(){
   document.getElementById('fPer').value='all';
@@ -596,71 +593,95 @@ function clearFilters(){
   applyFilters();
 }
 
-// ============================================================
-// KPI CALC
-// ============================================================
+// ── PAGE NAVIGATION ──────────────────────────────────────────
+function showPage(id,animate=true){
+  CURRENT_PAGE=id;
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const pg=document.getElementById(id);
+  pg.style.display='block';
+  // force reflow for animation
+  void pg.offsetWidth;
+  pg.classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const ni=document.querySelector(`.ni[data-pg="${id}"]`);
+  if(ni)ni.classList.add('on');
+  document.getElementById('pgLbl').textContent=PAGE_NAMES[id]||'';
+  if(DB.length)renderPage(id);
+}
+
+function renderPage(id){
+  const k=kpis(FD),pk=PD.length?kpis(PD):null;
+  switch(id){
+    case 'pg-visao':
+      renderKPIs(k,pk);
+      renderEvolution(FD);
+      renderStatusCnt(FD);
+      renderExec(FD);
+      const ct=FD.length;
+      document.getElementById('shCt').textContent=ct+' proposta'+(ct!==1?'s':'')+' no período';
+      break;
+    case 'pg-financeiro':
+      renderStatusVal(FD);
+      renderPendMes(FD);
+      break;
+    case 'pg-propostas':
+      renderTop10(FD);
+      renderCriticas(FD);
+      break;
+    case 'pg-unidades':
+      renderUnitProp(FD);
+      renderUnitAp(FD);
+      break;
+    case 'pg-aging':
+      renderAging(FD);
+      break;
+    case 'pg-tabela':
+      renderMensal(FD);
+      break;
+  }
+}
+
+// ── KPI CALC ─────────────────────────────────────────────────
 function kpis(data){
-  const t=data.length;
-  const vt=data.reduce((s,d)=>s+d.vlNum,0);
-  const ap=data.filter(d=>d.sp==='Aprovada');
-  const ag=data.filter(d=>d.sp==='Aguardando Aprovação');
-  const rc=data.filter(d=>d.sp==='Recusada');
-  const p15=ag.filter(d=>d.dias>15);
-  return{
-    t,vt,
-    va:ap.reduce((s,d)=>s+d.vlNum,0),na:ap.length,
+  const t=data.length,vt=data.reduce((s,d)=>s+d.vlNum,0);
+  const ap=data.filter(d=>d.sp==='Aprovada'),ag=data.filter(d=>d.sp==='Aguardando Aprovação');
+  const rc=data.filter(d=>d.sp==='Recusada'),p15=ag.filter(d=>d.dias>15);
+  return{t,vt,va:ap.reduce((s,d)=>s+d.vlNum,0),na:ap.length,
     vg:ag.reduce((s,d)=>s+d.vlNum,0),ng:ag.length,
     vr:rc.reduce((s,d)=>s+d.vlNum,0),nr:rc.length,
-    tx:t>0?ap.length/t*100:0,
-    tm:t>0?vt/t:0,
-    np15:p15.length,vp15:p15.reduce((s,d)=>s+d.vlNum,0),
-  };
+    tx:t>0?ap.length/t*100:0,tm:t>0?vt/t:0,
+    np15:p15.length,vp15:p15.reduce((s,d)=>s+d.vlNum,0)};
 }
 function dlta(c,p,inv=false){
-  if(p===undefined||p===null||p===0)return '<span class="kpi-d neu">—</span>';
-  const pct=(c-p)/Math.abs(p)*100;
-  const good=inv?pct<0:pct>=0;
-  const cls=good?'up':'dn';
-  const arrow=pct>=0?'↑':'↓';
-  return`<span class="kpi-d ${cls}">${arrow} ${Math.abs(pct).toLocaleString('pt-BR',{maximumFractionDigits:1})}%</span>`;
+  if(p===undefined||p===null||p===0)return'<span class="kpi-d neu">—</span>';
+  const pct=(c-p)/Math.abs(p)*100,good=inv?pct<0:pct>=0;
+  return`<span class="kpi-d ${good?'up':'dn'}">${pct>=0?'↑':'↓'} ${Math.abs(pct).toLocaleString('pt-BR',{maximumFractionDigits:1})}%</span>`;
 }
 
-// ============================================================
-// RENDER ALL
-// ============================================================
-function renderAll(fd,pd){
-  const k=kpis(fd),pk=pd.length?kpis(pd):null;
-  renderKPIs(k,pk);
-  renderEvolution(fd);
-  renderStatusVal(fd);
-  renderStatusCnt(fd);
-  renderExec(fd);
-  renderPendMes(fd);
-  renderUnitProp(fd);
-  renderUnitAp(fd);
-  renderAging(fd);
-  renderTop10(fd);
-  renderCriticas(fd);
-  renderMensal(fd);
-  renderFooter(k);
-}
-
-// ============================================================
-// KPI CARDS
-// ============================================================
+// ── KPI RENDER ────────────────────────────────────────────────
+const IC={
+  doc:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  money:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  check:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  clk:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  x:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  bars:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  pct:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>',
+  warn:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+};
 function renderKPIs(k,pk){
   const cards=[
-    {lbl:'Total de Propostas',val:fN(k.t),cl:'red',d:pk?dlta(k.t,pk.t):'',sub:`${k.na} aprov. · ${k.ng} aguard.`,mk:true,ic:IC_DOC},
-    {lbl:'Valor Total Proposto',val:fR(k.vt),cl:'red',d:pk?dlta(k.vt,pk.vt):'',sub:'Soma de todas as propostas',mk:false,ic:IC_MONEY},
-    {lbl:'Valor Aprovado',val:fR(k.va),cl:'grn',d:pk?dlta(k.va,pk.va):'',sub:`${k.na} aprovadas`,mk:false,ic:IC_CHECK},
-    {lbl:'Valor Aguardando',val:fR(k.vg),cl:'ylw',d:pk?dlta(k.vg,pk.vg,true):'',sub:`${k.ng} pendentes`,mk:false,ic:IC_CLK},
-    {lbl:'Valor Recusado',val:fR(k.vr),cl:'dng',d:pk?dlta(k.vr,pk.vr,true):'',sub:`${k.nr} recusadas`,mk:false,ic:IC_X},
-    {lbl:'Ticket Médio',val:fR(k.tm),cl:'blu',d:pk?dlta(k.tm,pk.tm):'',sub:'Valor médio por proposta',mk:false,ic:IC_CHART},
-    {lbl:'Taxa de Aprovação',val:fP(k.tx),cl:'grn',d:pk?dlta(k.tx,pk.tx):'',sub:'Aprovadas / Total',mk:false,ic:IC_PCT},
-    {lbl:'Pendentes +15 dias',val:fN(k.np15),cl:'dng',d:pk?dlta(k.np15,pk.np15,true):'',sub:fR(k.vp15)+' em risco',mk:false,ic:IC_WARN},
+    {lbl:'Total de Propostas',val:fN(k.t),cl:'red',d:pk?dlta(k.t,pk.t):'',sub:`${k.na} aprovadas · ${k.ng} aguardando`,mk:true,ic:IC.doc},
+    {lbl:'Valor Total Proposto',val:fR(k.vt),cl:'red',d:pk?dlta(k.vt,pk.vt):'',sub:'Soma de todas as propostas',mk:false,ic:IC.money},
+    {lbl:'Valor Aprovado',val:fR(k.va),cl:'grn',d:pk?dlta(k.va,pk.va):'',sub:`${k.na} aprovadas`,mk:false,ic:IC.check},
+    {lbl:'Valor Aguardando',val:fR(k.vg),cl:'ylw',d:pk?dlta(k.vg,pk.vg,true):'',sub:`${k.ng} pendentes`,mk:false,ic:IC.clk},
+    {lbl:'Valor Recusado',val:fR(k.vr),cl:'dng',d:pk?dlta(k.vr,pk.vr,true):'',sub:`${k.nr} recusadas`,mk:false,ic:IC.x},
+    {lbl:'Ticket Médio',val:fR(k.tm),cl:'blu',d:pk?dlta(k.tm,pk.tm):'',sub:'Valor médio por proposta',mk:false,ic:IC.bars},
+    {lbl:'Taxa de Aprovação',val:fP(k.tx),cl:'grn',d:pk?dlta(k.tx,pk.tx):'',sub:'Aprovadas / Total',mk:false,ic:IC.pct},
+    {lbl:'Pendentes +15 dias',val:fN(k.np15),cl:'dng',d:pk?dlta(k.np15,pk.np15,true):'',sub:fR(k.vp15)+' em risco',mk:false,ic:IC.warn},
   ];
   document.getElementById('kpiGrid').innerHTML=cards.map(c=>`
-    <div class="kpi ${c.cl}${c.mk?' mk':''} ani">
+    <div class="kpi ${c.cl}${c.mk?' mk':''}">
       <div class="kpi-row">
         <div class="kpi-ic">${c.ic}</div>
         <div class="kpi-b">
@@ -673,40 +694,25 @@ function renderKPIs(k,pk){
     </div>`).join('');
 }
 
-// ============================================================
-// ICONS
-// ============================================================
-const IC_DOC='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
-const IC_MONEY='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>';
-const IC_CHECK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-const IC_CLK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
-const IC_X='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-const IC_CHART='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
-const IC_PCT='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>';
-const IC_WARN='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
-
-// ============================================================
-// CHART HELPERS
-// ============================================================
+// ── CHART HELPERS ─────────────────────────────────────────────
 const TT={backgroundColor:'#1e1e2e',borderColor:'rgba(255,255,255,.1)',borderWidth:1,
   titleColor:'#f8fafc',bodyColor:'#9ca3af',padding:11,cornerRadius:8};
-const GC='rgba(255,255,255,0.06)';const TC='#64748b';
-function bOpts(){return{responsive:true,maintainAspectRatio:false,
-  animation:{duration:550,easing:'easeInOutQuart'},
+const GC='rgba(255,255,255,0.06)',TC='#64748b';
+function bO(){return{responsive:true,maintainAspectRatio:false,
+  animation:{duration:500,easing:'easeInOutQuart'},
   plugins:{legend:{labels:{color:'#9ca3af',font:{size:11},boxWidth:11,padding:14}},tooltip:TT},
   scales:{x:{grid:{color:GC},ticks:{color:TC,font:{size:11}}},y:{grid:{color:GC},ticks:{color:TC,font:{size:11}}}}};}
 function dC(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
-function setIns(id,txt,cls=''){const el=document.getElementById(id);if(!el)return;el.textContent=txt;el.className='ins'+(cls?' '+cls:'');}
+function sIns(id,txt,cls=''){const el=document.getElementById(id);if(el){el.textContent=txt;el.className='ins'+(cls?' '+cls:'');}}
 
-// ============================================================
-// CHART 1 — EVOLUÇÃO MENSAL
-// ============================================================
+// ── CHART: EVOLUÇÃO ────────────────────────────────────────────
 function renderEvolution(fd){
   dC('ev');
   const m={};
-  fd.forEach(d=>{const k=d.mesAno;if(!k)return;if(!m[k])m[k]={p:0,a:0};m[k].p+=d.vlNum;if(d.sp==='Aprovada')m[k].a+=d.vlNum;});
+  fd.forEach(d=>{const k=d.mesAno;if(!k)return;if(!m[k])m[k]={p:0,a:0};
+    m[k].p+=d.vlNum;if(d.sp==='Aprovada')m[k].a+=d.vlNum;});
   const lbs=Object.keys(m).sort(srtM);
-  if(!lbs.length){setIns('iEv','Sem dados para o período selecionado.');return;}
+  if(!lbs.length){sIns('iEv','Sem dados para o período.');return;}
   const tp=lbs.reduce((s,k)=>s+m[k].p,0),ta=lbs.reduce((s,k)=>s+m[k].a,0);
   const pct=tp>0?ta/tp*100:0;
   const best=lbs.reduce((b,k)=>m[k].a>m[b].a?k:b,lbs[0]);
@@ -715,34 +721,12 @@ function renderEvolution(fd){
       {label:'Proposto',data:lbs.map(k=>m[k].p),backgroundColor:'rgba(255,31,45,0.22)',borderColor:'#ff1f2d',borderWidth:2,borderRadius:5,order:2},
       {label:'Aprovado',data:lbs.map(k=>m[k].a),backgroundColor:'rgba(34,197,94,0.28)',borderColor:'#22c55e',borderWidth:2,borderRadius:5,order:1},
     ]},
-    options:{...bOpts(),plugins:{...bOpts().plugins,tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+fR(c.raw)}}},
+    options:{...bO(),plugins:{...bO().plugins,tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+fR(c.raw)}}},
       scales:{x:{grid:{color:GC},ticks:{color:TC}},y:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
-  const cls=pct>=50?'ok':pct>=25?'w':'d';
-  setIns('iEv',`Aprovação média: ${fP(pct)} do proposto. Melhor mês: ${best} (${fR(m[best].a)} aprovado).`,cls);
+  sIns('iEv',`Aprovação média: ${fP(pct)} do proposto. Melhor mês: ${best} (${fR(m[best].a)}).`,pct>=50?'ok':pct>=25?'w':'d');
 }
 
-// ============================================================
-// CHART 2 — VALOR POR STATUS
-// ============================================================
-function renderStatusVal(fd){
-  dC('sv');
-  const sps=['Aguardando Aprovação','Aprovada','Recusada'];
-  const lbls=['Aguardando','Aprovada','Recusada'];
-  const cors=['rgba(245,158,11,.75)','rgba(34,197,94,.75)','rgba(239,68,68,.75)'];
-  const brds=['#f59e0b','#22c55e','#ef4444'];
-  const vals=sps.map(s=>fd.filter(d=>d.sp===s).reduce((a,d)=>a+d.vlNum,0));
-  const mi=vals.indexOf(Math.max(...vals));
-  CH['sv']=new Chart(document.getElementById('chSV').getContext('2d'),{type:'bar',
-    data:{labels:lbls,datasets:[{data:vals,backgroundColor:cors,borderColor:brds,borderWidth:1,borderRadius:6}]},
-    options:{...bOpts(),indexAxis:'y',plugins:{...bOpts().plugins,legend:{display:false},
-      tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
-      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},y:{grid:{display:false},ticks:{color:'#f8fafc',font:{weight:'600'}}}}}});
-  setIns('iSV',`"${lbls[mi]}" concentra o maior valor: ${fR(vals[mi])}.`,mi===1?'ok':mi===0?'w':'d');
-}
-
-// ============================================================
-// CHART 3 — QUANTIDADE POR STATUS (DONUT)
-// ============================================================
+// ── CHART: STATUS COUNT (DONUT) ────────────────────────────────
 function renderStatusCnt(fd){
   dC('sc');
   const sps=['Aguardando Aprovação','Aprovada','Recusada'];
@@ -754,107 +738,115 @@ function renderStatusCnt(fd){
   const tot=ct.reduce((a,b)=>a+b,0);
   CH['sc']=new Chart(document.getElementById('chSC').getContext('2d'),{type:'doughnut',
     data:{labels:lbls,datasets:[{data:ct,backgroundColor:cors,borderColor:brds,borderWidth:2,hoverOffset:7}]},
-    options:{...bOpts(),scales:{},cutout:'65%',plugins:{...bOpts().plugins,
-      tooltip:{...TT,callbacks:{label:c=>{const p=tot>0?(ct[c.dataIndex]/tot*100).toFixed(1):0;return[`${c.label}: ${ct[c.dataIndex]} (${p}%)`,`Valor: ${fR(vl[c.dataIndex])}`];}}}}}});
-  const pA=tot>0?ct[1]/tot*100:0,pG=tot>0?ct[0]/tot*100:0;
-  setIns('iSC',`Taxa de aprovação: ${fP(pA)}. Pendentes: ${ct[0]} (${fP(pG)} das propostas).`,pA>=40?'ok':'w');
+    options:{...bO(),scales:{},cutout:'65%',plugins:{...bO().plugins,
+      tooltip:{...TT,callbacks:{label:c=>{const p=tot>0?(ct[c.dataIndex]/tot*100).toFixed(1):0;
+        return[`${c.label}: ${ct[c.dataIndex]} (${p}%)`,`Valor: ${fR(vl[c.dataIndex])}`];}}}}}});
+  const pA=tot>0?ct[1]/tot*100:0;
+  sIns('iSC',`Taxa de aprovação: ${fP(pA)}. ${ct[0]} proposta(s) aguardando, ${ct[1]} aprovada(s).`,pA>=40?'ok':'w');
 }
 
-// ============================================================
-// CHART 4 — STATUS EXECUÇÃO
-// ============================================================
+// ── CHART: STATUS EXECUÇÃO ────────────────────────────────────
 function renderExec(fd){
   dC('ex');
   const ses=[...new Set(fd.map(d=>d.se))].filter(Boolean);
   const ct=ses.map(s=>fd.filter(d=>d.se===s).length);
-  const CORS=['rgba(56,189,248,.75)','rgba(34,197,94,.75)','rgba(100,116,139,.75)','rgba(239,68,68,.75)','rgba(245,158,11,.75)'];
-  const BRDS=['#38bdf8','#22c55e','#64748b','#ef4444','#f59e0b'];
+  const CRS=['rgba(56,189,248,.75)','rgba(34,197,94,.75)','rgba(100,116,139,.75)','rgba(239,68,68,.75)','rgba(245,158,11,.75)'];
+  const BRD=['#38bdf8','#22c55e','#64748b','#ef4444','#f59e0b'];
+  if(!ses.length){sIns('iEx','Sem dados de execução.');return;}
   CH['ex']=new Chart(document.getElementById('chEx').getContext('2d'),{type:'doughnut',
-    data:{labels:ses,datasets:[{data:ct,backgroundColor:CORS.slice(0,ses.length),borderColor:BRDS.slice(0,ses.length),borderWidth:2,hoverOffset:7}]},
-    options:{...bOpts(),scales:{},cutout:'62%',plugins:{...bOpts().plugins,
-      tooltip:{...TT,callbacks:{label:c=>{const tot=ct.reduce((a,b)=>a+b,0);const p=tot>0?(ct[c.dataIndex]/tot*100).toFixed(1):0;return`${c.label}: ${ct[c.dataIndex]} (${p}%)`;}}}}}});
+    data:{labels:ses,datasets:[{data:ct,backgroundColor:CRS.slice(0,ses.length),borderColor:BRD.slice(0,ses.length),borderWidth:2,hoverOffset:7}]},
+    options:{...bO(),scales:{},cutout:'62%',plugins:{...bO().plugins,
+      tooltip:{...TT,callbacks:{label:c=>{const tot=ct.reduce((a,b)=>a+b,0);
+        const p=tot>0?(ct[c.dataIndex]/tot*100).toFixed(1):0;return`${c.label}: ${ct[c.dataIndex]} (${p}%)`;}}}}}});
   const mi=ct.indexOf(Math.max(...ct));
-  setIns('iEx',`Status mais frequente: "${ses[mi]||'—'}" com ${ct[mi]||0} propostas.`);
+  sIns('iEx',`Status mais frequente: "${ses[mi]||'—'}" com ${ct[mi]||0} proposta(s).`);
 }
 
-// ============================================================
-// CHART 5 — PENDENTES POR MÊS
-// ============================================================
+// ── CHART: VALOR POR STATUS ────────────────────────────────────
+function renderStatusVal(fd){
+  dC('sv');
+  const sps=['Aguardando Aprovação','Aprovada','Recusada'];
+  const lbls=['Aguardando','Aprovada','Recusada'];
+  const cors=['rgba(245,158,11,.7)','rgba(34,197,94,.7)','rgba(239,68,68,.7)'];
+  const brds=['#f59e0b','#22c55e','#ef4444'];
+  const vals=sps.map(s=>fd.filter(d=>d.sp===s).reduce((a,d)=>a+d.vlNum,0));
+  const mi=vals.indexOf(Math.max(...vals));
+  CH['sv']=new Chart(document.getElementById('chSV').getContext('2d'),{type:'bar',
+    data:{labels:lbls,datasets:[{data:vals,backgroundColor:cors,borderColor:brds,borderWidth:1,borderRadius:6}]},
+    options:{...bO(),indexAxis:'y',plugins:{...bO().plugins,legend:{display:false},
+      tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
+      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},
+        y:{grid:{display:false},ticks:{color:'#f8fafc',font:{weight:'600'}}}}}});
+  sIns('iSV',`"${lbls[mi]}" concentra o maior valor: ${fR(vals[mi])}.`,mi===1?'ok':mi===0?'w':'d');
+}
+
+// ── CHART: PENDENTES POR MÊS ───────────────────────────────────
 function renderPendMes(fd){
   dC('pm');
   const m={};
   fd.filter(d=>d.sp==='Aguardando Aprovação').forEach(d=>{const k=d.mesAno;if(!k)return;m[k]=(m[k]||0)+1;});
   const lbs=Object.keys(m).sort(srtM);
-  if(!lbs.length){setIns('iPM','Sem propostas aguardando no período.');return;}
-  const vals=lbs.map(k=>m[k]);
-  const mi=vals.indexOf(Math.max(...vals));
+  if(!lbs.length){sIns('iPM','Nenhuma proposta aguardando no período.');return;}
+  const vals=lbs.map(k=>m[k]),mi=vals.indexOf(Math.max(...vals));
   CH['pm']=new Chart(document.getElementById('chPM').getContext('2d'),{type:'bar',
-    data:{labels:lbs,datasets:[{label:'Propostas',data:vals,backgroundColor:'rgba(245,158,11,.3)',borderColor:'#f59e0b',borderWidth:2,borderRadius:6}]},
-    options:{...bOpts(),plugins:{...bOpts().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>`${c.raw} proposta(s)`}}},
+    data:{labels:lbs,datasets:[{label:'Pendentes',data:vals,backgroundColor:'rgba(245,158,11,.28)',borderColor:'#f59e0b',borderWidth:2,borderRadius:6}]},
+    options:{...bO(),plugins:{...bO().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>`${c.raw} proposta(s)`}}},
       scales:{x:{grid:{color:GC},ticks:{color:TC}},y:{grid:{color:GC},ticks:{color:TC,stepSize:1}}}}});
-  setIns('iPM',`Mês com mais pendentes: ${lbs[mi]} (${vals[mi]} propostas).`,'w');
+  sIns('iPM',`Mês com mais pendentes: ${lbs[mi]} (${vals[mi]} proposta(s)).`,'w');
 }
 
-// ============================================================
-// CHART 6 — VALOR PROPOSTO POR UNIDADE
-// ============================================================
+// ── CHART: UNIDADE PROPOSTO ────────────────────────────────────
 function renderUnitProp(fd){
   dC('up');
-  const m={};
-  fd.forEach(d=>{m[d.un]=(m[d.un]||0)+d.vlNum;});
+  const m={};fd.forEach(d=>{m[d.un]=(m[d.un]||0)+d.vlNum;});
   const en=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  if(!en.length){setIns('iUP','Sem dados de unidade.');return;}
+  if(!en.length){sIns('iUP','Sem dados.');return;}
   const tot=en.reduce((s,e)=>s+e[1],0);
   CH['up']=new Chart(document.getElementById('chUP').getContext('2d'),{type:'bar',
-    data:{labels:en.map(e=>e[0]),datasets:[{data:en.map(e=>e[1]),backgroundColor:'rgba(255,31,45,.25)',borderColor:'#ff1f2d',borderWidth:2,borderRadius:5}]},
-    options:{...bOpts(),indexAxis:'y',plugins:{...bOpts().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
-      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},y:{grid:{display:false},ticks:{color:'#f8fafc',font:{size:11}}}}}});
-  const pct=tot>0?en[0][1]/tot*100:0;
-  setIns('iUP',`"${en[0][0]}" lidera com ${fR(en[0][1])} (${fP(pct)} do total).`);
+    data:{labels:en.map(e=>e[0]),datasets:[{data:en.map(e=>e[1]),backgroundColor:'rgba(255,31,45,.22)',borderColor:'#ff1f2d',borderWidth:2,borderRadius:5}]},
+    options:{...bO(),indexAxis:'y',plugins:{...bO().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
+      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},
+        y:{grid:{display:false},ticks:{color:'#f8fafc',font:{size:11}}}}}});
+  sIns('iUP',`"${en[0][0]}" lidera com ${fR(en[0][1])} (${fP(tot>0?en[0][1]/tot*100:0)} do total).`);
 }
 
-// ============================================================
-// CHART 7 — VALOR APROVADO POR UNIDADE
-// ============================================================
+// ── CHART: UNIDADE APROVADO ────────────────────────────────────
 function renderUnitAp(fd){
   dC('ua');
-  const m={};
-  fd.filter(d=>d.sp==='Aprovada').forEach(d=>{m[d.un]=(m[d.un]||0)+d.vlNum;});
+  const m={};fd.filter(d=>d.sp==='Aprovada').forEach(d=>{m[d.un]=(m[d.un]||0)+d.vlNum;});
   const en=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  if(!en.length){document.getElementById('chUA').parentElement.innerHTML='<div class="empty">Nenhuma aprovada no período</div>';setIns('iUA','Sem aprovações.');return;}
+  const wrap=document.getElementById('chUA');
+  if(!en.length){if(wrap)wrap.parentElement.innerHTML='<div class="empty">Nenhuma aprovada no período</div>';sIns('iUA','Sem aprovações.');return;}
   const tot=en.reduce((s,e)=>s+e[1],0);
-  CH['ua']=new Chart(document.getElementById('chUA').getContext('2d'),{type:'bar',
-    data:{labels:en.map(e=>e[0]),datasets:[{data:en.map(e=>e[1]),backgroundColor:'rgba(34,197,94,.25)',borderColor:'#22c55e',borderWidth:2,borderRadius:5}]},
-    options:{...bOpts(),indexAxis:'y',plugins:{...bOpts().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
-      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},y:{grid:{display:false},ticks:{color:'#f8fafc',font:{size:11}}}}}});
-  const pct=tot>0?en[0][1]/tot*100:0;
-  setIns('iUA',`"${en[0][0]}" lidera em aprovações: ${fR(en[0][1])} (${fP(pct)}).`,'ok');
+  CH['ua']=new Chart(wrap.getContext('2d'),{type:'bar',
+    data:{labels:en.map(e=>e[0]),datasets:[{data:en.map(e=>e[1]),backgroundColor:'rgba(34,197,94,.22)',borderColor:'#22c55e',borderWidth:2,borderRadius:5}]},
+    options:{...bO(),indexAxis:'y',plugins:{...bO().plugins,legend:{display:false},tooltip:{...TT,callbacks:{label:c=>fR(c.raw)}}},
+      scales:{x:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}},
+        y:{grid:{display:false},ticks:{color:'#f8fafc',font:{size:11}}}}}});
+  sIns('iUA',`"${en[0][0]}" lidera em aprovações: ${fR(en[0][1])} (${fP(tot>0?en[0][1]/tot*100:0)}).`,'ok');
 }
 
-// ============================================================
-// CHART 8 — AGING
-// ============================================================
+// ── CHART: AGING ──────────────────────────────────────────────
 function renderAging(fd){
   dC('ag');
   const fx={'0–7 dias':{v:0,n:0},'8–15 dias':{v:0,n:0},'16–30 dias':{v:0,n:0},'+30 dias':{v:0,n:0}};
   fd.filter(d=>d.sp==='Aguardando Aprovação').forEach(d=>{fx[d.aging].v+=d.vlNum;fx[d.aging].n++;});
-  const lbs=Object.keys(fx);
-  const vals=lbs.map(k=>fx[k].v);
+  const lbs=Object.keys(fx),vals=lbs.map(k=>fx[k].v);
   const cors=['rgba(34,197,94,.75)','rgba(56,189,248,.75)','rgba(245,158,11,.75)','rgba(255,31,45,.82)'];
   const brds=['#22c55e','#38bdf8','#f59e0b','#ff1f2d'];
   CH['ag']=new Chart(document.getElementById('chAg').getContext('2d'),{type:'bar',
     data:{labels:lbs,datasets:[{data:vals,backgroundColor:cors,borderColor:brds,borderWidth:2,borderRadius:7}]},
-    options:{...bOpts(),plugins:{...bOpts().plugins,legend:{display:false},
+    options:{...bO(),plugins:{...bO().plugins,legend:{display:false},
       tooltip:{...TT,callbacks:{label:c=>[fR(c.raw),`${fx[lbs[c.dataIndex]].n} proposta(s)`]}}},
-      scales:{x:{grid:{display:false},ticks:{color:'#f8fafc',font:{weight:'600'}}},y:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
+      scales:{x:{grid:{display:false},ticks:{color:'#f8fafc',font:{weight:'600'}}},
+        y:{grid:{color:GC},ticks:{color:TC,callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}});
   const crit=fx['+30 dias'].n,alert=fx['16–30 dias'].n;
-  const cls=crit>0?'d':alert>0?'w':'ok';
-  setIns('iAg',crit>0?`⚠ ${crit} proposta(s) acima de 30 dias (${fR(fx['+30 dias'].v)}). ${alert} próximas ao vencimento.`:alert>0?`${alert} proposta(s) entre 16–30 dias. Atenção: prazo se aproximando.`:'Todas as propostas dentro do prazo normal.',cls);
+  sIns('iAg',crit>0?`⚠ ${crit} proposta(s) acima de 30 dias (${fR(fx['+30 dias'].v)}). ${alert} em atenção.`:
+    alert>0?`${alert} proposta(s) entre 16–30 dias. Atenção ao prazo.`:
+    'Todas as pendências dentro do prazo normal.',crit>0?'d':alert>0?'w':'ok');
 }
 
-// ============================================================
-// TABELA TOP 10
-// ============================================================
+// ── TABLE: TOP 10 ────────────────────────────────────────────
 function renderTop10(fd){
   const top=[...fd].sort((a,b)=>b.vlNum-a.vlNum).slice(0,10);
   document.getElementById('bdTop').textContent=top.length+' registros';
@@ -862,48 +854,42 @@ function renderTop10(fd){
   document.getElementById('tbTop').innerHTML=top.length?top.map((d,i)=>`
     <tr>
       <td style="color:var(--dim);font-weight:700">${i+1}</td>
-      <td style="font-family:monospace;font-size:.72rem">${d.np}</td>
+      <td style="font-family:monospace;font-size:.71rem">${d.np}</td>
       <td style="color:var(--muted)">${d.nt||'—'}</td>
       <td>${d.un}</td>
-      <td style="color:var(--muted);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ds}">${d.ds||'—'}</td>
+      <td style="color:var(--muted);max-width:155px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ds}">${d.ds||'—'}</td>
       <td><span class="bd ${bm[d.sp]||'bd-x'}">${d.sp}</span></td>
       <td class="r" style="font-weight:700">${fR(d.vlNum)}</td>
     </tr>`).join(''):'<tr><td colspan="7"><div class="empty">Sem dados</div></td></tr>';
 }
 
-// ============================================================
-// TABELA CRÍTICAS
-// ============================================================
+// ── TABLE: CRÍTICAS ──────────────────────────────────────────
 function renderCriticas(fd){
   const crit=fd.filter(d=>d.critica).sort((a,b)=>b.dias-a.dias||b.vlNum-a.vlNum);
   document.getElementById('bdCrit').textContent=crit.length+' críticas';
-  function agCls(n){return n<=7?'ag-ok':n<=15?'ag-w':n<=30?'ag-a':'ag-c';}
+  const agCls=n=>n<=7?'ag-ok':n<=15?'ag-w':n<=30?'ag-a':'ag-c';
   document.getElementById('tbCrit').innerHTML=crit.length?crit.map(d=>`
     <tr class="ac">
-      <td style="font-family:monospace;font-size:.72rem">${d.np}</td>
+      <td style="font-family:monospace;font-size:.71rem">${d.np}</td>
       <td style="color:var(--muted)">${d.nt||'—'}</td>
       <td>${d.un}</td>
-      <td style="color:var(--muted);max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ds}">${d.ds||'—'}</td>
+      <td style="color:var(--muted);max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ds}">${d.ds||'—'}</td>
       <td>${fDt(d.dp)}</td>
       <td class="r" style="font-weight:700;color:var(--red)">${fR(d.vlNum)}</td>
       <td><span class="ag0 ${agCls(d.dias)}">${d.dias}d</span></td>
-      <td style="color:var(--dim);font-size:.7rem;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ob}">${d.ob}</td>
+      <td style="color:var(--dim);font-size:.69rem;max-width:130px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="${d.ob}">${d.ob}</td>
     </tr>`).join(''):'<tr><td colspan="8"><div class="empty">Nenhuma proposta crítica no período</div></td></tr>';
 }
 
-// ============================================================
-// TABELA MENSAL
-// ============================================================
+// ── TABLE: MENSAL ────────────────────────────────────────────
 function renderMensal(fd){
   const m={};
-  fd.forEach(d=>{
-    const k=d.mesAno;if(!k)return;
+  fd.forEach(d=>{const k=d.mesAno;if(!k)return;
     if(!m[k])m[k]={k,t:0,p:0,a:0,g:0,r:0,na:0};
     m[k].t++;m[k].p+=d.vlNum;
     if(d.sp==='Aprovada'){m[k].a+=d.vlNum;m[k].na++;}
     if(d.sp==='Aguardando Aprovação')m[k].g+=d.vlNum;
-    if(d.sp==='Recusada')m[k].r+=d.vlNum;
-  });
+    if(d.sp==='Recusada')m[k].r+=d.vlNum;});
   const rows=Object.values(m).sort((a,b)=>srtM(a.k,b.k));
   const maxG=Math.max(...rows.map(r=>r.g),0);
   document.getElementById('tbMen').innerHTML=rows.length?rows.map(r=>{
@@ -921,9 +907,7 @@ function renderMensal(fd){
   }).join(''):'<tr><td colspan="8"><div class="empty">Sem dados</div></td></tr>';
 }
 
-// ============================================================
-// FOOTER
-// ============================================================
+// ── FOOTER ──────────────────────────────────────────────────
 function renderFooter(k){
   document.getElementById('ft1').textContent=fN(k.t);
   document.getElementById('ft2').textContent=fR(k.vt);
@@ -931,45 +915,16 @@ function renderFooter(k){
   document.getElementById('ft4').textContent=fR(k.tm);
 }
 
-// ============================================================
-// HEADER SUB
-// ============================================================
+// ── HEADER ──────────────────────────────────────────────────
 function updateHdr(){
   const dps=DB.map(d=>d.dpDate).filter(Boolean).sort((a,b)=>a-b);
   const cls=[...new Set(DB.map(d=>d.cl).filter(Boolean))];
   const min=dps.length?dps[0].toLocaleDateString('pt-BR'):'—';
   const max=dps.length?dps[dps.length-1].toLocaleDateString('pt-BR'):'—';
-  document.getElementById('hdrSub').textContent=(cls.join(' · ')||'—')+' · Período: '+min+' a '+max;
+  document.getElementById('hdrSub').textContent=(cls.join(' · ')||'—')+' · '+min+' a '+max;
 }
 
-// ============================================================
-// SIDEBAR SCROLLSPY
-// ============================================================
-function scrollTo(id){
-  const el=document.getElementById(id);
-  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
-}
-function setupScrollspy(){
-  const secs=['s-visao','s-financeiro','s-unidades','s-aging','s-propostas','s-tabela'];
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-        const ni=document.querySelector(`.ni[data-sec="${e.target.id}"]`);
-        if(ni)ni.classList.add('on');
-      }
-    });
-  },{threshold:.2,rootMargin:'-80px 0px -60% 0px'});
-  secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
-}
-
-// ============================================================
-// UI HELPERS
-// ============================================================
-function showState(s){
-  document.getElementById('stLoad').style.display=s==='load'?'flex':'none';
-  document.getElementById('stErr').style.display=s==='err'?'flex':'none';
-}
+// ── UI HELPERS ───────────────────────────────────────────────
 function setConn(s,t){
   const dot=document.getElementById('cDot');
   dot.style.background=s==='ok'?'var(--green)':s==='err'?'var(--danger)':'var(--red)';
@@ -977,15 +932,10 @@ function setConn(s,t){
   document.getElementById('cTxt').textContent=t;
 }
 let _tt;
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),4000);}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),4000);}
 
-// ============================================================
-// INIT
-// ============================================================
-document.addEventListener('DOMContentLoaded',()=>{
-  setupScrollspy();
-  loadData();
-});
+// ── INIT ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',loadData);
 </script>
 </body>
 </html>
